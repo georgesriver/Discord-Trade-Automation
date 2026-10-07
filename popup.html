@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body { width: 280px; padding: 16px; font-family: system-ui, sans-serif; background: #1e1f22; color: #dbdee1; margin: 0; }
+    h1 { font-size: 13px; margin: 0 0 12px; }
+    label { font-size: 11px; color: #b5bac1; display: block; margin-bottom: 4px; }
+    input { width: 100%; padding: 8px; border: 1px solid #3f4147; border-radius: 4px; background: #2b2d31; color: #dbdee1; box-sizing: border-box; margin-bottom: 12px; }
+    button { width: 100%; padding: 8px; background: #5865f2; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: 500; }
+    button:hover { background: #4752c4; }
+    .status { font-size: 11px; color: #23a559; margin-top: 8px; min-height: 16px; }
+  </style>
+</head>
+<body>
+  <h1>Trade Alerting Discord Forwarder 0.1.0</h1>
+  <label>本地中继地址</label>
+  <input type="text" id="relayUrl" placeholder="http://127.0.0.1:8765/signal" />
+  <button id="save">保存</button>
+  <div class="status" id="status"></div>
+  <script>
+    const input = document.getElementById("relayUrl");
+    const status = document.getElementById("status");
+    chrome.storage.sync.get(["relayUrl"], r => { input.value = r.relayUrl || "http://127.0.0.1:8765/signal"; });
+    document.getElementById("save").onclick = () => {
+      chrome.storage.sync.set({ relayUrl: input.value }, () => {
+        status.textContent = "已保存";
+        setTimeout(() => status.textContent = "", 1500);
+      });
+    };
+  </script>
+</body>
+</html>

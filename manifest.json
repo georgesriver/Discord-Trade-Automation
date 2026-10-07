@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Trade Alerting Discord Web Forwarder",
+  "version": "0.1.0",
+  "description": "Forwards new visible Discord Web channel messages to a local-only relay for trading signal processing.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "https://discord.com/*",
+    "https://*.discord.com/*",
+    "http://127.0.0.1/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://discord.com/*", "https://*.discord.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Discord Trade Forwarder"
+  }
+}
